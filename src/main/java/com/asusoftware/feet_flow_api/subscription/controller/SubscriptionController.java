@@ -6,6 +6,7 @@ import com.asusoftware.feet_flow_api.subscription.model.dto.SubscriptionDto;
 import com.asusoftware.feet_flow_api.subscription.model.dto.SubscriptionRequestDto;
 import com.asusoftware.feet_flow_api.subscription.service.SubscriptionService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/subscriptions")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;

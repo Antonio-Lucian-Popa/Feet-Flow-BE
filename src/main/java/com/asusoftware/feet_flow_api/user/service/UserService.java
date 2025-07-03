@@ -7,6 +7,7 @@ import com.asusoftware.feet_flow_api.user.model.dto.UserDto;
 import com.asusoftware.feet_flow_api.user.model.dto.UserSummaryDto;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;

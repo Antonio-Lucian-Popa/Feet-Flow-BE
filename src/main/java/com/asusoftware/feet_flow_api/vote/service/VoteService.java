@@ -9,6 +9,7 @@ import com.asusoftware.feet_flow_api.vote.model.dto.VoteCountDto;
 import com.asusoftware.feet_flow_api.vote.model.dto.VoteRequestDto;
 import com.asusoftware.feet_flow_api.vote.repository.VoteRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class VoteService {
 
     private final VoteRepository voteRepository;

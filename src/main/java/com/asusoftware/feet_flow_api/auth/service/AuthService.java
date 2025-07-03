@@ -7,6 +7,7 @@ import com.asusoftware.feet_flow_api.user.model.dto.LoginResponseDto;
 import com.asusoftware.feet_flow_api.user.model.dto.UserRegisterDto;
 import com.asusoftware.feet_flow_api.user.model.dto.UserResponseDto;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -19,7 +20,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthService {
 
     private final KeycloakService keycloakService;
@@ -45,7 +46,7 @@ public class AuthService {
                 .email(dto.getEmail())
                 .firstName(dto.getFirstName())
                 .lastName(dto.getLastName())
-                .role(dto.getRole().name().toLowerCase()) // "user", "creator"
+                .role(dto.getRole()) // "user", "creator"
                 .createdAt(Instant.now(clock))
                 .build();
 
@@ -74,7 +75,7 @@ public class AuthService {
         UUID keycloakId = UUID.fromString(principal.getSubject());
         User user = userRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        return userMapper.toDto(user);
+        return mapper.map(user, UserResponseDto.class);
     }
 
     /**

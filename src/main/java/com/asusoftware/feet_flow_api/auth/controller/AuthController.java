@@ -6,6 +6,7 @@ import com.asusoftware.feet_flow_api.user.model.dto.LoginDto;
 import com.asusoftware.feet_flow_api.user.model.dto.LoginResponseDto;
 import com.asusoftware.feet_flow_api.user.model.dto.UserRegisterDto;
 import com.asusoftware.feet_flow_api.user.model.dto.UserResponseDto;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class AuthController {
 
     private final AuthService authService;

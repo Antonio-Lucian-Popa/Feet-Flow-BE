@@ -7,6 +7,7 @@ import com.asusoftware.feet_flow_api.post.repository.PostMediaRepository;
 import com.asusoftware.feet_flow_api.post.repository.PostRepository;
 import com.asusoftware.feet_flow_api.user.model.User;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;

@@ -15,7 +15,7 @@ CREATE TABLE users (
 
 -- POSTS
 CREATE TABLE posts (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     creator_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(150),
     description TEXT,
@@ -25,8 +25,8 @@ CREATE TABLE posts (
 
 -- POST MEDIA (poze & video multiple per postare)
 CREATE TABLE post_media (
-    id SERIAL PRIMARY KEY,
-    post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     media_url TEXT NOT NULL,
     media_type VARCHAR(10) CHECK (media_type IN ('photo', 'video')),
     thumbnail_url TEXT,
@@ -35,9 +35,9 @@ CREATE TABLE post_media (
 
 -- VOTES (like/dislike)
 CREATE TABLE votes (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     value INTEGER CHECK (value IN (1, -1)),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, post_id)
@@ -45,7 +45,7 @@ CREATE TABLE votes (
 
 -- SUBSCRIPTIONS (pentru faza următoare)
 CREATE TABLE subscriptions (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     subscriber_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     creator_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     start_date DATE NOT NULL,
@@ -56,9 +56,9 @@ CREATE TABLE subscriptions (
 
 -- COMMENTS (opțional)
 CREATE TABLE comments (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    post_id INTEGER NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
+    post_id UUID NOT NULL REFERENCES posts(id) ON DELETE CASCADE,
     content TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

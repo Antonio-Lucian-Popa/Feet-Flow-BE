@@ -8,6 +8,7 @@ import com.asusoftware.feet_flow_api.comment.repository.CommentRepository;
 import com.asusoftware.feet_flow_api.user.model.User;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +20,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CommentService {
 
     private final CommentRepository commentRepository;

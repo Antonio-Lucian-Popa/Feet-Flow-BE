@@ -2,7 +2,7 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:postgresql://antonio-dev.go.ro:15773/onlyfeetDb
+    url: jdbc:postgresql://antonio-dev.go.ro:15880/feetFlowDb
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -20,15 +20,15 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://antonio-dev.go.ro:8081/keycloak-app/realms/onlyFeet-realm
+          issuer-uri: http://antonio-dev.go.ro:8081/keycloak-app/realms/feetFlow-realm
 
 keycloak:
-  realm: onlyFeet-realm
-  resource: onlyFeet-backend
+  realm: feetFlow-realm
+  resource: feetFlow-backend
   # auth-server-url: http://antonio-dev.go.ro:8081/keycloack-app/realms/gym-management-realm/protocol/openid-connect/auth
   auth-server-url: http://antonio-dev.go.ro:8081/keycloak-app/
   credentials:
-    secret: 3QMoOAoGysubdKpWSLSaFWiMjMaQ9ijI
+    secret: 0Ddu8q4G3EkSr0pPJ9V8dsf0k5sJj0SS
   admin:
     username: admin
     password: admin

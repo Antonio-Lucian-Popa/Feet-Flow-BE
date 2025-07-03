@@ -8,6 +8,7 @@ import com.asusoftware.feet_flow_api.user.model.User;
 import com.asusoftware.feet_flow_api.user.model.UserRole;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;

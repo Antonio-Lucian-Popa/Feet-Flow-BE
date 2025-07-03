@@ -5,6 +5,7 @@ import com.asusoftware.feet_flow_api.post.model.dto.CreatePostRequestDto;
 import com.asusoftware.feet_flow_api.post.model.dto.UpdatePostRequestDto;
 import com.asusoftware.feet_flow_api.post.service.PostService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/posts")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class PostController {
 
     private final PostService postService;
