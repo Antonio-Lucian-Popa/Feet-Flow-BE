@@ -1,6 +1,7 @@
 package com.asusoftware.feet_flow_api.user.repository;
 
 import com.asusoftware.feet_flow_api.user.model.User;
+import com.asusoftware.feet_flow_api.user.model.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT u FROM User u WHERE LOWER(u.firstName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(u.lastName) LIKE LOWER(CONCAT('%', :query, '%'))")
     Page<User> searchByName(String query, Pageable pageable);
 
-    Page<User> findAllByRole(String role, Pageable pageable);
+    Page<User> findAllByRole(UserRole role, Pageable pageable);
 }
 

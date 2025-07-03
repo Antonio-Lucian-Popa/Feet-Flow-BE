@@ -62,7 +62,7 @@ public class UserService {
     }
 
     public Page<UserSummaryDto> getCreators(int page, int size) {
-        return userRepository.findAllByRole(UserRole.CREATOR.name(), PageRequest.of(page, size))
+        return userRepository.findAllByRole(UserRole.CREATOR, PageRequest.of(page, size))
                 .map(user -> modelMapper.map(user, UserSummaryDto.class));
     }
 
