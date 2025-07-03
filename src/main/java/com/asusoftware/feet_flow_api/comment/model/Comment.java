@@ -23,7 +23,7 @@ public class Comment {
     private UUID userId;
 
     @Column(name = "post_id", nullable = false)
-    private Long postId;
+    private UUID postId;
 
     @Column(nullable = false)
     private String content;
