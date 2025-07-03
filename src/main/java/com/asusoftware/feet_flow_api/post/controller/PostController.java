@@ -7,6 +7,7 @@ import com.asusoftware.feet_flow_api.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -49,7 +50,7 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.ok(postService.getPostById(id)));
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<ApiResponse<?>> create(@AuthenticationPrincipal Jwt jwt,
                                                  @RequestPart("isPublic") boolean isPublic,
                                                  @RequestPart(value = "title", required = false) String title,
