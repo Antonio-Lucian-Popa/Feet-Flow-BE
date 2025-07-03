@@ -3,6 +3,7 @@ package com.asusoftware.feet_flow_api.post.controller;
 import com.asusoftware.feet_flow_api.common.ApiResponse;
 import com.asusoftware.feet_flow_api.post.model.dto.CreatePostRequestDto;
 import com.asusoftware.feet_flow_api.post.model.dto.UpdatePostRequestDto;
+import com.asusoftware.feet_flow_api.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<?>> getById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<?>> getById(@PathVariable UUID id) {
         return ResponseEntity.ok(ApiResponse.ok(postService.getPostById(id)));
     }
 
