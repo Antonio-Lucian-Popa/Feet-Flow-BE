@@ -152,6 +152,7 @@ public class KeycloakService {
                 .username(username)
                 .password(password)
                 .grantType(OAuth2Constants.PASSWORD)
+                .scope("openid offline_access")
                 .build()
                 .tokenManager()
                 .getAccessToken();
