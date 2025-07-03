@@ -12,7 +12,7 @@ public interface VoteRepository extends JpaRepository<Vote, UUID> {
 
     Optional<Vote> findByUserIdAndPostId(UUID userId, UUID postId);
 
-    long countByPostIdAndValue(UUID postId, int value); // upvotes or downvotes
+    int countByPostIdAndValue(UUID postId, int value); // upvotes or downvotes
 
     void deleteByUserIdAndPostId(UUID userId, UUID postId);
 }
