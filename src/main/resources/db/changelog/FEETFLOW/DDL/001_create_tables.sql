@@ -7,7 +7,7 @@ CREATE TABLE users (
     last_name VARCHAR(50) NOT NULL,
     keycloak_id UUID NOT NULL UNIQUE,
     email VARCHAR(100) UNIQUE NOT NULL,
-    role VARCHAR(20) NOT NULL CHECK (role IN ('user', 'creator', 'admin')),
+    role VARCHAR(20) NOT NULL CHECK (role IN ('USER', 'CREATOR', 'ADMIN')),
     bio TEXT,
     profile_picture_url TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

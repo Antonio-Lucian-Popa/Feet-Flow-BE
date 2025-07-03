@@ -29,8 +29,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String role; // user / creator / admin
+    private UserRole role; // user / creator / admin
 
     private String bio;
     private String profilePictureUrl;
@@ -38,5 +39,4 @@ public class User {
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
-    // Getters, Setters
 }

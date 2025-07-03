@@ -1,5 +1,9 @@
 package com.asusoftware.feet_flow_api.config;
 
+import com.asusoftware.feet_flow_api.user.model.UserRole;
+import com.asusoftware.feet_flow_api.user.model.dto.LoginDto;
+import com.asusoftware.feet_flow_api.user.model.dto.LoginResponseDto;
+import com.asusoftware.feet_flow_api.user.model.dto.UserRegisterDto;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
@@ -51,7 +55,7 @@ public class KeycloakService {
             throw new RuntimeException("User deja existent în Keycloak.");
         }
 
-        UsersRole role;
+        UserRole role;
         try {
             role = userDTO.getRole();
         } catch (IllegalArgumentException e) {

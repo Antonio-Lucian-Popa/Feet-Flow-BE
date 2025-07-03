@@ -1,6 +1,11 @@
 package com.asusoftware.feet_flow_api.auth.controller;
 
+import com.asusoftware.feet_flow_api.auth.service.AuthService;
 import com.asusoftware.feet_flow_api.common.ApiResponse;
+import com.asusoftware.feet_flow_api.user.model.dto.LoginDto;
+import com.asusoftware.feet_flow_api.user.model.dto.LoginResponseDto;
+import com.asusoftware.feet_flow_api.user.model.dto.UserRegisterDto;
+import com.asusoftware.feet_flow_api.user.model.dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,25 +22,25 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody RegisterRequest request) {
-        UserResponse response = authService.register(request);
+    public ResponseEntity<ApiResponse<UserResponseDto>> register(@RequestBody UserRegisterDto request) {
+        UserResponseDto response = authService.register(request);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<AuthResponse>> login(@RequestBody LoginRequest request) {
-        AuthResponse response = authService.login(request);
+    public ResponseEntity<ApiResponse<LoginResponseDto>> login(@RequestBody LoginDto request) {
+        LoginResponseDto response = authService.login(request);
         return ResponseEntity.ok(ApiResponse.ok(response));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<ApiResponse<UserResponse>> me(@AuthenticationPrincipal Jwt jwt) {
-        UserResponse user = authService.getCurrentUser(jwt);
+    public ResponseEntity<ApiResponse<UserResponseDto>> me(@AuthenticationPrincipal Jwt jwt) {
+        UserResponseDto user = authService.getCurrentUser(jwt);
         return ResponseEntity.ok(ApiResponse.ok(user));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<ApiResponse<AuthResponse>> refresh(@RequestBody Map<String, String> body) {
+    public ResponseEntity<ApiResponse<LoginResponseDto>> refresh(@RequestBody Map<String, String> body) {
         String refreshToken = body.get("refreshToken");
         return ResponseEntity.ok(ApiResponse.ok(authService.refresh(refreshToken)));
     }

@@ -1,5 +1,6 @@
 package com.asusoftware.feet_flow_api.user.model.dto;
 
+import com.asusoftware.feet_flow_api.user.model.UserRole;
 import lombok.*;
 
 @Getter
@@ -12,6 +13,6 @@ public class UserRegisterDto {
     private String lastName;
     private String email;
     private String password;
-    private UsersRole role;
+    private UserRole role;
 }
 
