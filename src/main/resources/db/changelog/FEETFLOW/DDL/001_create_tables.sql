@@ -63,7 +63,7 @@ CREATE TABLE comments (
 
 -- FOLLOWS (cu target_id pentru a respecta codul)
 CREATE TABLE follows (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     follower_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     target_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
