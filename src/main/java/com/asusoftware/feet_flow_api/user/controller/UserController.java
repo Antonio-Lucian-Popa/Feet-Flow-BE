@@ -44,8 +44,7 @@ public class UserController {
     @PostMapping("/profile/picture")
     public ResponseEntity<ApiResponse<String>> uploadProfilePicture(@AuthenticationPrincipal Jwt jwt,
                                                                     @RequestParam("file") MultipartFile file) {
-        String url = mediaStorageService.upload(file);
-        userService.updateProfilePicture(jwt, url);
+        String url = userService.updateProfilePicture(jwt, file);
         return ResponseEntity.ok(ApiResponse.ok(url));
     }
 

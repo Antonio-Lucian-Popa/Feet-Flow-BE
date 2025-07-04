@@ -2,6 +2,7 @@ package com.asusoftware.feet_flow_api.post.controller;
 
 import com.asusoftware.feet_flow_api.common.ApiResponse;
 import com.asusoftware.feet_flow_api.post.model.dto.CreatePostRequestDto;
+import com.asusoftware.feet_flow_api.post.model.dto.PostResponseDto;
 import com.asusoftware.feet_flow_api.post.model.dto.UpdatePostRequestDto;
 import com.asusoftware.feet_flow_api.post.service.PostService;
 import jakarta.validation.Valid;
@@ -13,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.List;
 import java.util.Map;
@@ -50,12 +52,12 @@ public class PostController {
         return ResponseEntity.ok(ApiResponse.ok(postService.getPostById(id)));
     }
 
-    @PostMapping()
-    public ResponseEntity<ApiResponse<?>> create(@AuthenticationPrincipal Jwt jwt,
-                                                 @RequestPart("isPublic") boolean isPublic,
-                                                 @RequestPart(value = "title", required = false) String title,
-                                                 @RequestPart(value = "description", required = false) String description,
-                                                 @RequestPart("media") List<MultipartFile> media) {
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<ApiResponse<PostResponseDto>> create(@AuthenticationPrincipal Jwt jwt,
+                                                               @RequestParam("isPublic") boolean isPublic,
+                                                               @RequestParam(value = "title", required = false) String title,
+                                                               @RequestParam(value = "description", required = false) String description,
+                                                               @RequestParam(value = "media", required = false) List<MultipartFile> media) {
         CreatePostRequestDto request = CreatePostRequestDto.builder()
                 .isPublic(isPublic)
                 .title(title)

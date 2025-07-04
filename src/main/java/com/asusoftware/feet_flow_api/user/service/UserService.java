@@ -1,5 +1,6 @@
 package com.asusoftware.feet_flow_api.user.service;
 
+import com.asusoftware.feet_flow_api.post.service.MediaStorageService;
 import com.asusoftware.feet_flow_api.user.model.User;
 import com.asusoftware.feet_flow_api.user.model.UserRole;
 import com.asusoftware.feet_flow_api.user.model.dto.UpdateProfileRequestDto;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
@@ -23,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final MediaStorageService mediaStorageService;
 
     public UserDto getById(UUID id) {
         return userRepository.findById(id)
@@ -52,13 +55,16 @@ public class UserService {
     }
 
     @Transactional
-    public void updateProfilePicture(Jwt jwt, String url) {
+    public String updateProfilePicture(Jwt jwt, MultipartFile file) {
         UUID keycloakId = UUID.fromString(jwt.getSubject());
         User user = userRepository.findByKeycloakId(keycloakId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        String url = mediaStorageService.upload(file, user.getId());
+
         user.setProfilePictureUrl(url);
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return savedUser.getProfilePictureUrl();
     }
 
     public Page<UserSummaryDto> getCreators(int page, int size) {

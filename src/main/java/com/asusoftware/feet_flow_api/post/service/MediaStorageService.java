@@ -2,40 +2,48 @@ package com.asusoftware.feet_flow_api.post.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class MediaStorageService {
 
-    private final String UPLOAD_DIR = "uploads";
+    @Value("${external-link.url}")
+    private String externalLinkBase;
 
     /**
      * Simulează un upload local. În producție: folosește S3 / Cloudinary.
      */
-    public String upload(MultipartFile file) {
+    public String upload(MultipartFile file, UUID postId) {
+        if (file.isEmpty()) throw new IllegalArgumentException("Empty file not allowed");
         try {
-            String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
-            Path uploadPath = Paths.get(UPLOAD_DIR);
-            Files.createDirectories(uploadPath);
+            String originalFilename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            Path directory = Paths.get("uploads/images", postId.toString()).toAbsolutePath().normalize();
+            Files.createDirectories(directory);
+            Path destination = directory.resolve(originalFilename);
 
-            Path filePath = uploadPath.resolve(filename);
-            file.transferTo(filePath);
+            if (!destination.getParent().equals(directory)) {
+                throw new SecurityException("Invalid path detected");
+            }
 
-            // În producție, returnează URL complet (ex: https://cdn.onlyfeet.com/...)
-            return "/uploads/" + filename;
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destination, StandardCopyOption.REPLACE_EXISTING);
+            }
+            return externalLinkBase + postId + "/" + originalFilename;
         } catch (IOException e) {
-            log.error("Failed to upload file", e);
-            throw new RuntimeException("Upload failed");
+            throw new RuntimeException("Failed to store file", e);
         }
     }
 
@@ -43,11 +51,14 @@ public class MediaStorageService {
         if (url == null || url.isBlank()) return;
 
         try {
-            String filename = Paths.get(url).getFileName().toString();
-            Path filePath = Paths.get(UPLOAD_DIR).resolve(filename);
+            // Extragem partea după domain, ex: uploads/images/{postId}/{filename}
+            String relativePath = url.replace(externalLinkBase, "");
+            Path filePath = Paths.get("uploads").resolve(relativePath).toAbsolutePath().normalize();
+
             Files.deleteIfExists(filePath);
         } catch (IOException e) {
-            log.warn("Could not delete file: {}", url);
+            log.warn("Could not delete file: {}", url, e);
         }
     }
+
 }

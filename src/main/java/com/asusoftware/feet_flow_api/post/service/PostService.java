@@ -1,5 +1,6 @@
 package com.asusoftware.feet_flow_api.post.service;
 
+import com.asusoftware.feet_flow_api.auth.service.AuthService;
 import com.asusoftware.feet_flow_api.post.model.Post;
 import com.asusoftware.feet_flow_api.post.model.PostMedia;
 import com.asusoftware.feet_flow_api.post.model.dto.*;
@@ -7,6 +8,7 @@ import com.asusoftware.feet_flow_api.post.repository.PostMediaRepository;
 import com.asusoftware.feet_flow_api.post.repository.PostRepository;
 import com.asusoftware.feet_flow_api.user.model.User;
 import com.asusoftware.feet_flow_api.user.repository.UserRepository;
+import com.asusoftware.feet_flow_api.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,7 @@ public class PostService {
     private final UserRepository userRepository;
     private final MediaStorageService mediaStorageService;
     private final Clock clock = Clock.systemUTC();
+    private final AuthService authService;
 
     public Page<PostResponseDto> getAllPublicPosts(int page, int size) {
         return postRepository.findAllByIsPublicTrue(PageRequest.of(page, size))
@@ -55,10 +58,10 @@ public class PostService {
 
     @Transactional
     public PostResponseDto create(Jwt jwt, CreatePostRequestDto request) {
-        UUID creatorId = UUID.fromString(jwt.getSubject());
+        User user = authService.getCurrentUserEntity(jwt);
 
         Post post = Post.builder()
-                .creatorId(creatorId)
+                .creatorId(user.getId())
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .isPublic(request.isPublic())
@@ -69,7 +72,7 @@ public class PostService {
         List<PostMedia> mediaList = new ArrayList<>();
         int order = 0;
         for (MultipartFile file : request.getMedia()) {
-            String url = mediaStorageService.upload(file);
+            String url = mediaStorageService.upload(file, post.getId());
             String mediaType = file.getContentType() != null && file.getContentType().startsWith("video") ? "video" : "photo";
 
             mediaList.add(PostMedia.builder()
