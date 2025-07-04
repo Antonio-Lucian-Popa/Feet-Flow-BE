@@ -26,6 +26,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final MediaStorageService mediaStorageService;
+    private final FollowService followService;
 
     public UserDto getById(UUID id) {
         return userRepository.findById(id)
@@ -69,7 +70,11 @@ public class UserService {
 
     public Page<UserSummaryDto> getCreators(int page, int size) {
         return userRepository.findAllByRole(UserRole.CREATOR, PageRequest.of(page, size))
-                .map(user -> modelMapper.map(user, UserSummaryDto.class));
+                .map(user -> {
+                    UserSummaryDto dto = modelMapper.map(user, UserSummaryDto.class);
+                    dto.setStats(followService.getStats(user.getId())); // ← adăugăm stats
+                    return dto;
+                });
     }
 
     public Page<UserSummaryDto> search(String query, int page, int size) {
