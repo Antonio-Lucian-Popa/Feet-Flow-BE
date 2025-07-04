@@ -16,6 +16,7 @@ public class UserSummaryDto {
     private String firstName;
     private String lastName;
     private String profilePictureUrl;
+    private String coverImageUrl;
     private String bio;
     private UserStatsDto stats;
 }

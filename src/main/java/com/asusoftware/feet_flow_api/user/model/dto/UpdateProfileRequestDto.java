@@ -18,6 +18,7 @@ public class UpdateProfileRequestDto {
     @NotBlank
     private String lastName;
 
-    @NotBlank
     private String bio;
+
+    private String email;
 }
