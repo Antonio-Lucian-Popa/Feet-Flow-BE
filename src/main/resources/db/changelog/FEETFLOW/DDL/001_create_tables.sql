@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
 -- USERS
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -63,6 +61,15 @@ CREATE TABLE comments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- FOLLOWS (cu target_id pentru a respecta codul)
+CREATE TABLE follows (
+    id SERIAL PRIMARY KEY,
+    follower_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    target_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(follower_id, target_id)
+);
+
 -- INDEXES
 CREATE INDEX idx_posts_creator_id ON posts(creator_id);
 CREATE INDEX idx_post_media_post_id ON post_media(post_id);
@@ -72,3 +79,38 @@ CREATE INDEX idx_comments_post_id ON comments(post_id);
 CREATE INDEX idx_comments_user_id ON comments(user_id);
 CREATE INDEX idx_subscriptions_subscriber ON subscriptions(subscriber_id);
 CREATE INDEX idx_subscriptions_creator ON subscriptions(creator_id);
+CREATE INDEX idx_follows_follower_id ON follows(follower_id);
+CREATE INDEX idx_follows_target_id ON follows(target_id);
+
+-- AGGREGATION HELPERS
+-- Număr de postări pentru un user
+CREATE OR REPLACE FUNCTION count_posts_by_creator(uid UUID)
+RETURNS INTEGER AS $$
+SELECT COUNT(*) FROM posts WHERE creator_id = uid;
+$$ LANGUAGE SQL;
+
+-- Număr de voturi pozitive pe postările userului
+CREATE OR REPLACE FUNCTION count_likes_for_creator(uid UUID)
+RETURNS INTEGER AS $$
+SELECT COUNT(*) FROM votes v
+JOIN posts p ON p.id = v.post_id
+WHERE p.creator_id = uid AND v.value = 1;
+$$ LANGUAGE SQL;
+
+-- Număr de subscriberi
+CREATE OR REPLACE FUNCTION count_subscribers(uid UUID)
+RETURNS INTEGER AS $$
+SELECT COUNT(*) FROM subscriptions WHERE creator_id = uid AND is_active = true;
+$$ LANGUAGE SQL;
+
+-- Număr de followers
+CREATE OR REPLACE FUNCTION count_followers(uid UUID)
+RETURNS INTEGER AS $$
+SELECT COUNT(*) FROM follows WHERE target_id = uid;
+$$ LANGUAGE SQL;
+
+-- Număr de following
+CREATE OR REPLACE FUNCTION count_following(uid UUID)
+RETURNS INTEGER AS $$
+SELECT COUNT(*) FROM follows WHERE follower_id = uid;
+$$ LANGUAGE SQL;
