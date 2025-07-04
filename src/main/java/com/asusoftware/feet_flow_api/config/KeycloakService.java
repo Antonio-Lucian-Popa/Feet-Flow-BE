@@ -140,6 +140,21 @@ public class KeycloakService {
         keycloak.realm(realm).users().delete(keycloakId.toString());
     }
 
+    public void changePassword(UUID keycloakUserId, String newPassword) {
+        Keycloak keycloak = getKeycloakAdminInstance();
+
+        CredentialRepresentation newCred = new CredentialRepresentation();
+        newCred.setType(CredentialRepresentation.PASSWORD);
+        newCred.setTemporary(false); // parola nu este temporară
+        newCred.setValue(newPassword);
+
+        keycloak.realm(realm)
+                .users()
+                .get(keycloakUserId.toString())
+                .resetPassword(newCred);
+    }
+
+
     /**
      * Obține token prin username + password (grant type: password).
      */

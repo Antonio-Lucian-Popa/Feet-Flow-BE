@@ -1,11 +1,9 @@
 package com.asusoftware.feet_flow_api.user.controller;
 
 import com.asusoftware.feet_flow_api.common.ApiResponse;
+import com.asusoftware.feet_flow_api.config.KeycloakService;
 import com.asusoftware.feet_flow_api.post.service.MediaStorageService;
-import com.asusoftware.feet_flow_api.user.model.dto.UpdateProfileRequestDto;
-import com.asusoftware.feet_flow_api.user.model.dto.UserDto;
-import com.asusoftware.feet_flow_api.user.model.dto.UserStatsDto;
-import com.asusoftware.feet_flow_api.user.model.dto.UserSummaryDto;
+import com.asusoftware.feet_flow_api.user.model.dto.*;
 import com.asusoftware.feet_flow_api.user.service.FollowService;
 import com.asusoftware.feet_flow_api.user.service.UserService;
 import jakarta.validation.Valid;
@@ -27,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
     private final FollowService followService;
+    private final KeycloakService keycloakService;
 
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserDto>> getUserById(@PathVariable UUID id) {
@@ -50,6 +49,22 @@ public class UserController {
         String url = userService.updateProfilePicture(jwt, file);
         return ResponseEntity.ok(ApiResponse.ok(url));
     }
+
+    @PostMapping("/profile/cover")
+    public ResponseEntity<ApiResponse<UserDto>> uploadCoverImage(@AuthenticationPrincipal Jwt jwt,
+                                                                 @RequestParam("coverImage") MultipartFile file) {
+        return ResponseEntity.ok(ApiResponse.ok(userService.updateCoverImage(jwt, file)));
+    }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<ApiResponse<Void>> changePassword(@AuthenticationPrincipal Jwt jwt,
+                                                            @RequestBody ChangePasswordRequestDto request) {
+        UUID keycloakId = UUID.fromString(jwt.getSubject());
+        keycloakService.changePassword(keycloakId, request.getNewPassword());
+        return ResponseEntity.ok(ApiResponse.ok());
+    }
+
+
 
     @GetMapping("/creators")
     public ResponseEntity<ApiResponse<Page<UserSummaryDto>>> getCreators(@RequestParam(defaultValue = "0") int page,

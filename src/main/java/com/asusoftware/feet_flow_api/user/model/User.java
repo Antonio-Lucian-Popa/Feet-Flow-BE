@@ -39,6 +39,7 @@ public class User {
 
     private String bio;
     private String profilePictureUrl;
+    private String coverImageUrl;
 
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();

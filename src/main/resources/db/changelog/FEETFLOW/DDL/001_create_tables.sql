@@ -8,6 +8,7 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL CHECK (role IN ('USER', 'CREATOR', 'ADMIN')),
     bio TEXT,
     profile_picture_url TEXT,
+    coverImageUrl TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

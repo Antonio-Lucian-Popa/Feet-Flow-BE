@@ -68,6 +68,19 @@ public class UserService {
         return savedUser.getProfilePictureUrl();
     }
 
+    @Transactional
+    public UserDto updateCoverImage(Jwt jwt, MultipartFile file) {
+        UUID keycloakId = UUID.fromString(jwt.getSubject());
+        User user = userRepository.findByKeycloakId(keycloakId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String url = mediaStorageService.upload(file, user.getId()); // folosește folderul /uploads/images/{userId}
+        user.setCoverImageUrl(url); // asigură-te că ai câmpul în entitate și în DTO
+
+        return modelMapper.map(userRepository.save(user), UserDto.class);
+    }
+
+
     public Page<UserSummaryDto> getCreators(int page, int size) {
         return userRepository.findAllByRole(UserRole.CREATOR, PageRequest.of(page, size))
                 .map(user -> {

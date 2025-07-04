@@ -20,6 +20,7 @@ public class UserDto {
     private String email;
     private String bio;
     private String profilePictureUrl;
+    private String coverImageUrl;
     private Instant createdAt;
     private UserRole role;
 }
