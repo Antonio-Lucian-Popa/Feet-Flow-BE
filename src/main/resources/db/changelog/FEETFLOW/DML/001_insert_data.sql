@@ -27,9 +27,15 @@ INSERT INTO posts (id, creator_id, title, description, is_public, created_at) VA
 
 --changeset antonio:seed-post-media
 INSERT INTO post_media (id, post_id, media_url, media_type, thumbnail_url, order_index) VALUES
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001', '/uploads/images/10000000-0000-0000-0000-000000000001/soft1.jpg', 'photo', null, 0),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002', '/uploads/images/10000000-0000-0000-0000-000000000002/gym1.jpg', 'photo', null, 0),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/lazy1.jpg', 'photo', null, 0);
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001', '/uploads/images/10000000-0000-0000-0000-000000000001/soft1.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001', '/uploads/images/10000000-0000-0000-0000-000000000001/soft2.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002', '/uploads/images/10000000-0000-0000-0000-000000000002/soft3.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002', '/uploads/images/10000000-0000-0000-0000-000000000002/soft4.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002', '/uploads/images/10000000-0000-0000-0000-000000000002/soft5.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/soft6.jpeg', 'photo', null, 0);
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/soft7.jpeg', 'photo', null, 0);
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/soft8.jpeg', 'photo', null, 0);
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/soft9.jpeg', 'photo', null, 0);
 
 --changeset antonio:seed-votes
 INSERT INTO votes (id, user_id, post_id, value) VALUES
