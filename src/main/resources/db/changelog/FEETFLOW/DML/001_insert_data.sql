@@ -3,12 +3,12 @@
 --changeset antonio:seed-users
 INSERT INTO users (id, first_name, last_name, keycloak_id, email, role, bio, profile_picture_url, cover_image_url)
 SELECT '00000000-0000-0000-0000-000000000001'::uuid, 'Ana', 'Sole', uuid_generate_v4(), 'ana@feet.com', 'CREATOR', 'Elegant feet',
-       'http://localhost:8080/images/00000000-0000-0000-0000-000000000001/profile.jpg',
-       'http://localhost:8080/images/00000000-0000-0000-0000-000000000001/cover.jpg'
+       'http://antonio-dev.go.ro:8081/feet-flow-api/images/00000000-0000-0000-0000-000000000001/profile.jpg',
+       'http://antonio-dev.go.ro:8081/feet-flow-api/images/00000000-0000-0000-0000-000000000001/cover.jpg'
 UNION ALL
 SELECT '00000000-0000-0000-0000-000000000002'::uuid, 'Lara', 'Steps', uuid_generate_v4(), 'lara@feet.com', 'CREATOR', 'Gym feet',
-       'http://localhost:8080/images/00000000-0000-0000-0000-000000000002/profile.jpg',
-       'http://localhost:8080/images/00000000-0000-0000-0000-000000000002/cover.jpg'
+       'http://antonio-dev.go.ro:8081/feet-flow-api/images/00000000-0000-0000-0000-000000000002/profile.jpg',
+       'http://antonio-dev.go.ro:8081/feet-flow-api/images/00000000-0000-0000-0000-000000000002/cover.jpg'
 UNION ALL
 SELECT '00000000-0000-0000-0000-000000000003'::uuid, 'Eva', 'Toes', uuid_generate_v4(), 'eva@feet.com', 'CREATOR', 'Casual barefoot model',
        '/uploads/images/00000000-0000-0000-0000-000000000003/profile.jpg',
@@ -26,15 +26,15 @@ INSERT INTO posts (id, creator_id, title, description, is_public, created_at) VA
 
 --changeset antonio:seed-post-media
 INSERT INTO post_media (id, post_id, media_url, media_type, thumbnail_url, order_index) VALUES
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000001/soft1.jpeg', 'photo', null, 0),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000001/soft2.jpeg', 'photo', null, 1),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000002/soft3.jpeg', 'photo', null, 0),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000002/soft4.jpeg', 'photo', null, 1),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000002/soft5.jpeg', 'photo', null, 2),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000003/soft6.jpeg', 'photo', null, 0),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000003/soft7.jpeg', 'photo', null, 1),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000003/soft8.jpeg', 'photo', null, 2),
-  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://localhost:8080/images/10000000-0000-0000-0000-000000000003/soft9.jpeg', 'photo', null, 3);
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000001/soft1.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000001/soft2.jpeg', 'photo', null, 1),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000002/soft3.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000002/soft4.jpeg', 'photo', null, 1),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000002/soft5.jpeg', 'photo', null, 2),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000003/soft6.jpeg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000003/soft7.jpeg', 'photo', null, 1),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000003/soft8.jpeg', 'photo', null, 2),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003'::uuid, 'http://antonio-dev.go.ro:8081/feet-flow-api/images/10000000-0000-0000-0000-000000000003/soft9.jpeg', 'photo', null, 3);
 
 --changeset antonio:seed-votes
 INSERT INTO votes (id, user_id, post_id, value) VALUES

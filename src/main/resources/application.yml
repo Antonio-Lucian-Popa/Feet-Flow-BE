@@ -47,7 +47,7 @@ upload:
   dir: uploads/
 
 external-link:
-  url: "http://localhost:8080/images/"
+  url: "http://antonio-dev.go.ro:8081/feet-flow-api/images/"
   #url: "http://antonio-dev.go.ro:8081/dentatrack-api/images/"
 
 media:
@@ -55,7 +55,7 @@ media:
     dir: uploads
   public:
     url:
-      prefix: http://localhost:8080/uploads/
+      prefix: http://antonio-dev.go.ro:8081/feet-flow-api/uploads/
 
 stripe:
   api:
