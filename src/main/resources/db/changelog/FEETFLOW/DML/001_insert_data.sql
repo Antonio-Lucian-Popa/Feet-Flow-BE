@@ -13,11 +13,7 @@ VALUES
 
   ('00000000-0000-0000-0000-000000000003', 'Eva', 'Toes', uuid_generate_v4(), 'eva@feet.com', 'CREATOR', 'Casual barefoot model',
     '/uploads/images/00000000-0000-0000-0000-000000000003/profile.jpg',
-    '/uploads/images/00000000-0000-0000-0000-000000000003/cover.jpg'),
-
-  ('00000000-0000-0000-0000-000000000004', 'Mihai', 'Viewer', uuid_generate_v4(), 'mihai@users.com', 'USER', null, null, null),
-
-  ('00000000-0000-0000-0000-000000000005', 'Radu', 'Watcher', uuid_generate_v4(), 'radu@users.com', 'USER', null, null, null);
+    '/uploads/images/00000000-0000-0000-0000-000000000003/cover.jpg');
 
 --changeset antonio:seed-posts
 INSERT INTO posts (id, creator_id, title, description, is_public, created_at) VALUES
