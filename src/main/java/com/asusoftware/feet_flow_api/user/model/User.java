@@ -38,7 +38,11 @@ public class User {
     private UserRole role; // user / creator / admin
 
     private String bio;
+
+    @Column(name = "profile_picture_url")
     private String profilePictureUrl;
+
+    @Column(name = "cover_image_url")
     private String coverImageUrl;
 
     @Column(name = "created_at")
