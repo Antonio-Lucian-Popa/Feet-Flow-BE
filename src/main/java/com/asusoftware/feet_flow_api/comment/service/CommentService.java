@@ -1,5 +1,6 @@
 package com.asusoftware.feet_flow_api.comment.service;
 
+import com.asusoftware.feet_flow_api.auth.service.AuthService;
 import com.asusoftware.feet_flow_api.comment.model.Comment;
 import com.asusoftware.feet_flow_api.comment.model.dto.CommentAuthorDto;
 import com.asusoftware.feet_flow_api.comment.model.dto.CommentRequestDto;
@@ -25,6 +26,7 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
+    private final AuthService authService;
     private final Clock clock = Clock.systemUTC();
 
     public Page<CommentResponseDto> getByPost(UUID postId, int page, int size) {
@@ -34,10 +36,10 @@ public class CommentService {
 
     @Transactional
     public CommentResponseDto create(Jwt jwt, CommentRequestDto request) {
-        UUID userId = UUID.fromString(jwt.getSubject());
+        User user = authService.getCurrentUserEntity(jwt);
 
         Comment comment = Comment.builder()
-                .userId(userId)
+                .userId(user.getId())
                 .postId(request.getPostId())
                 .content(request.getContent())
                 .createdAt(Instant.now(clock))
