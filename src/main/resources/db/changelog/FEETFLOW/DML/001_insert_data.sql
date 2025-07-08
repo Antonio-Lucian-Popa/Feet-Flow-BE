@@ -1,7 +1,7 @@
 --liquibase formatted sql
 
 --changeset antonio:seed-users
-INSERT INTO users (id, first_name, last_name, keycloak_id, email, role, bio, profile_picture_url, coverImageUrl)
+INSERT INTO users (id, first_name, last_name, keycloak_id, email, role, bio, profile_picture_url, cover_image_url)
 SELECT '00000000-0000-0000-0000-000000000001'::uuid, 'Ana', 'Sole', uuid_generate_v4(), 'ana@feet.com', 'CREATOR', 'Elegant feet',
        'http://localhost:8080/uploads/images/00000000-0000-0000-0000-000000000001/profile.jpg',
        'http://localhost:8080/uploads/images/00000000-0000-0000-0000-000000000001/cover.jpg'
