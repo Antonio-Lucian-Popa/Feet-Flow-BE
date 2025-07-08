@@ -1,0 +1,52 @@
+--liquibase formatted sql
+
+--changeset antonio:seed-users
+INSERT INTO users (id, first_name, last_name, keycloak_id, email, role, bio, profile_picture_url, coverImageUrl)
+VALUES
+  ('00000000-0000-0000-0000-000000000001', 'Ana', 'Sole', uuid_generate_v4(), 'ana@feet.com', 'CREATOR', 'Elegant feet',
+    '/uploads/images/00000000-0000-0000-0000-000000000001/profile.jpg',
+    '/uploads/images/00000000-0000-0000-0000-000000000001/cover.jpg'),
+
+  ('00000000-0000-0000-0000-000000000002', 'Lara', 'Steps', uuid_generate_v4(), 'lara@feet.com', 'CREATOR', 'Gym feet',
+    '/uploads/images/00000000-0000-0000-0000-000000000002/profile.jpg',
+    '/uploads/images/00000000-0000-0000-0000-000000000002/cover.jpg'),
+
+  ('00000000-0000-0000-0000-000000000003', 'Eva', 'Toes', uuid_generate_v4(), 'eva@feet.com', 'CREATOR', 'Casual barefoot model',
+    '/uploads/images/00000000-0000-0000-0000-000000000003/profile.jpg',
+    '/uploads/images/00000000-0000-0000-0000-000000000003/cover.jpg'),
+
+  ('00000000-0000-0000-0000-000000000004', 'Mihai', 'Viewer', uuid_generate_v4(), 'mihai@users.com', 'USER', null, null, null),
+
+  ('00000000-0000-0000-0000-000000000005', 'Radu', 'Watcher', uuid_generate_v4(), 'radu@users.com', 'USER', null, null, null);
+
+--changeset antonio:seed-posts
+INSERT INTO posts (id, creator_id, title, description, is_public, created_at) VALUES
+  ('10000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'Soft Soles Showcase', 'Relaxing barefoot session 👣', true, now() - interval '3 days'),
+  ('10000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000002', 'Gym Barefoot Routine', 'Post-workout feet', true, now() - interval '2 days'),
+  ('10000000-0000-0000-0000-000000000003', '00000000-0000-0000-0000-000000000003', 'Lazy Sunday Chill', 'Feet up on the couch', true, now() - interval '1 day');
+
+--changeset antonio:seed-post-media
+INSERT INTO post_media (id, post_id, media_url, media_type, thumbnail_url, order_index) VALUES
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000001', '/uploads/images/10000000-0000-0000-0000-000000000001/soft1.jpg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000002', '/uploads/images/10000000-0000-0000-0000-000000000002/gym1.jpg', 'photo', null, 0),
+  (uuid_generate_v4(), '10000000-0000-0000-0000-000000000003', '/uploads/images/10000000-0000-0000-0000-000000000003/lazy1.jpg', 'photo', null, 0);
+
+--changeset antonio:seed-votes
+INSERT INTO votes (id, user_id, post_id, value) VALUES
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000001', 1),
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000002', -1);
+
+--changeset antonio:seed-follows
+INSERT INTO follows (id, follower_id, target_id, created_at) VALUES
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000001', now()),
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000002', now());
+
+--changeset antonio:seed-subscriptions
+INSERT INTO subscriptions (id, subscriber_id, creator_id, start_date, end_date, is_active) VALUES
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000004', '00000000-0000-0000-0000-000000000001', current_date, current_date + INTERVAL '30 days', true),
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000005', '00000000-0000-0000-0000-000000000002', current_date, current_date + INTERVAL '30 days', true);
+
+--changeset antonio:seed-comments
+INSERT INTO comments (id, user_id, post_id, content) VALUES
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000004', '10000000-0000-0000-0000-000000000001', 'Love this set 🔥'),
+  (uuid_generate_v4(), '00000000-0000-0000-0000-000000000005', '10000000-0000-0000-0000-000000000002', 'Could use more angles 😉');
